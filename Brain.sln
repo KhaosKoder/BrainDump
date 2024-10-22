@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonParser", "JsonParser\JsonParser.csproj", "{5F64B58A-B5C7-487A-9E60-CB39F0FE6F41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonExtractionLanguage", "JsonExtractionLanguage\JsonExtractionLanguage.csproj", "{E4765B6A-5C22-41BB-BD02-36E5E5F2596A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F64B58A-B5C7-487A-9E60-CB39F0FE6F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F64B58A-B5C7-487A-9E60-CB39F0FE6F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F64B58A-B5C7-487A-9E60-CB39F0FE6F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F64B58A-B5C7-487A-9E60-CB39F0FE6F41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4765B6A-5C22-41BB-BD02-36E5E5F2596A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4765B6A-5C22-41BB-BD02-36E5E5F2596A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4765B6A-5C22-41BB-BD02-36E5E5F2596A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4765B6A-5C22-41BB-BD02-36E5E5F2596A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F34AD566-4CC3-488B-B097-087BF0DDB3AF}
+	EndGlobalSection
+EndGlobal
