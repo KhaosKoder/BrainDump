@@ -3,9 +3,9 @@
 using JsonExtractionLanguage;
 using Newtonsoft.Json.Linq;
 
-var script = @"
+var script = @"-- my comment
     int x = 10;
-    string y = ""hello"";
+    string y = ""hello""; -- and this should break it.
     x = x + 5;
     y = y + "" world"";
     x = x -1;
@@ -21,7 +21,7 @@ if (!parseTree.HasErrors())
     var j = new JObject();
     Console.WriteLine("Parsing succeeded. Parse tree:");
     parser.PrintParseTree(parseTree);
-var interpreter = new JELInterpreter(j);
+    var interpreter = new JELInterpreter(j);
     var returnValue = interpreter.Execute(parseTree);
     Console.WriteLine($"Return value: {returnValue}");
 }

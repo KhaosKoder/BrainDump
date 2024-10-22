@@ -6,6 +6,10 @@ public class JELGrammar : Grammar
 {
     public JELGrammar()
     {
+        // Define comment terminal
+        var comment = new CommentTerminal("comment", "--", "\n", "\r\n");
+        NonGrammarTerminals.Add(comment);  // This tells Irony to completely ignore comments
+
         // Define term types
         var number = TerminalFactory.CreateCSharpNumber("number");
         var str = TerminalFactory.CreateCSharpString("string");
