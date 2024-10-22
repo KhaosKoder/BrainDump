@@ -22,7 +22,8 @@ if (!parseTree.HasErrors())
     Console.WriteLine("Parsing succeeded. Parse tree:");
     parser.PrintParseTree(parseTree);
 var interpreter = new JELInterpreter(j);
-    interpreter.Execute(parseTree);
+    var returnValue = interpreter.Execute(parseTree);
+    Console.WriteLine($"Return value: {returnValue}");
 }
 else
 {

@@ -125,11 +125,13 @@ public class StatementExecutor
 {
     private readonly VariableManager _variableManager;
     private readonly ExpressionEvaluator _expressionEvaluator;
+    private readonly Action<JToken> _returnCallback;
 
-    public StatementExecutor(VariableManager variableManager, ExpressionEvaluator expressionEvaluator)
+    public StatementExecutor(VariableManager variableManager, ExpressionEvaluator expressionEvaluator, Action<JToken> returnCallback)
     {
         _variableManager = variableManager;
         _expressionEvaluator = expressionEvaluator;
+        _returnCallback = returnCallback;
     }
 
     public void ExecuteStatement(ParseTreeNode node)
@@ -158,15 +160,13 @@ public class StatementExecutor
 
     private void ExecuteDeclaration(ParseTreeNode node)
     {
-        // Debug check
         if (node.ChildNodes.Count < 3)
         {
             throw new InvalidOperationException($"Declaration node has insufficient children: {node.ChildNodes.Count}");
         }
 
-        // For varType, we need to get the actual keyword value
         var typeNode = node.ChildNodes[0];
-        var varType = typeNode.ChildNodes[0].Token.ValueString;  // Changed this line
+        var varType = typeNode.ChildNodes[0].Token.ValueString;
 
         var identifierNode = node.ChildNodes[1];
         var identifier = identifierNode.Token.ValueString;
@@ -200,7 +200,7 @@ public class StatementExecutor
     {
         var expressionNode = node.ChildNodes[1];
         var value = _expressionEvaluator.Evaluate(expressionNode);
-        Console.WriteLine($"Return value: {value}");
+        _returnCallback(value);
     }
 
     private void ValidateType(string expectedType, JToken value)
@@ -219,30 +219,45 @@ public class StatementExecutor
         }
     }
 }
+
 public class JELInterpreter
 {
     private readonly VariableManager _variableManager;
     private readonly ExpressionEvaluator _expressionEvaluator;
     private readonly StatementExecutor _statementExecutor;
+    private JToken _returnValue;
 
     public JELInterpreter(JObject existingJson)
     {
         _variableManager = new VariableManager(existingJson);
         _expressionEvaluator = new ExpressionEvaluator(_variableManager);
-        _statementExecutor = new StatementExecutor(_variableManager, _expressionEvaluator);
+        _statementExecutor = new StatementExecutor(_variableManager, _expressionEvaluator, OnReturn);
     }
 
-    public void Execute(ParseTree parseTree)
+    private void OnReturn(JToken value)
+    {
+        _returnValue = value;
+    }
+
+    public JToken Execute(ParseTree parseTree)
     {
         if (parseTree.HasErrors())
         {
             throw new InvalidOperationException("Cannot execute parse tree with errors");
         }
 
+        _returnValue = null;
+
         foreach (var node in parseTree.Root.ChildNodes)
         {
             _statementExecutor.ExecuteStatement(node);
+            if (_returnValue != null)
+            {
+                break;
+            }
         }
+
+        return _returnValue;
     }
 
     public JObject GetResult() => _variableManager.GetSymbolTable();
